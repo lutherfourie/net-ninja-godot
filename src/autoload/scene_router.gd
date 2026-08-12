@@ -7,6 +7,7 @@ extends Node
 const ROUTES := {
 	"menu": "res://src/scenes/main_menu.tscn",
 	"room": "res://src/scenes/room_hub.tscn",
+	"catch": "res://src/scenes/catch_game.tscn",
 }
 
 const FADE_TIME := 0.28

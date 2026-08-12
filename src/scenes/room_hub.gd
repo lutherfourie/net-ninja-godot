@@ -129,8 +129,10 @@ func _unhandled_input(event: InputEvent) -> void:
 func _interact(prop: PropDef) -> void:
 	match prop.interact_id:
 		"pc":
-			GameState.possession = GameState.possession + 0.12
-			_say("The inbox has a new contract. The cursor is not yours.")
+			# The inbox is the contract board. Taking one starts the catch loop;
+			# how it ends is what moves possession now.
+			_say("New contract. The cursor moves on its own.")
+			SceneRouter.goto("catch")
 		"cat":
 			GameState.possession = GameState.possession - 0.10
 			_say("Miso purrs. The shadow on the wall does not.")

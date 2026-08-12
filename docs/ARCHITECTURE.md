@@ -44,6 +44,8 @@ layout file does not change by a single line.
 | `room_model.gd` | A space: bounds, spawn, walkable rects, props, ambient tint. Answers `is_walkable`, `blockers`, `interactables`. |
 | `actor_body.gd` | Character motion. Axis-separated AABB-vs-circle against `room.blockers()`. No physics server — a room of boxes does not need one, and skipping it keeps touch input immediate. |
 | `rooms/ami_apartment.gd` | The flat, laid out from the concept render. Read it top to bottom and you walk the room clockwise. |
+| `catch_rules.gd` | Every tunable for one contract, as an exported Resource. |
+| `catch_model.gd` | The catch loop's cadence, scoring and failure state. See the note under `catch_2d/` for why this boundary sits where it does. |
 
 ### `src/view/`
 
@@ -66,6 +68,36 @@ layout file does not change by a single line.
   environmental" get expressed without any baked textures.
 - **The floor is one node, not one node per plank.** A room is a few hundred
   triangles; the win is in draw calls, not node count.
+
+### `src/view/catch_2d/`
+
+The catch loop moves the boundary, and it is worth being explicit about why
+rather than pretending the rule is universal.
+
+"Spectral balls fall, collide and visibly stack inside the net" is a *simulation
+result*. Hand-rolling sphere stacking to keep it renderer-agnostic would produce
+worse physics, more code and a worse game. So here the split is **rules vs
+simulation**, not data vs rendering:
+
+- `src/core/catch_model.gd` owns slam cadence, the difficulty ramp, scoring, the
+  drop limit and the win/lose decision. No bodies, no contacts, no pixels.
+- `src/core/catch_rules.gd` holds every tunable as an exported Resource, so a
+  harder cat is a different `.tres`, not a different code path.
+- `catch_2d/` owns `RigidBody2D` balls, the `AnimatableBody2D` net, the sensors
+  and all presentation.
+
+The payoff is the same one the room gets: a `Catch3DView` built for p.12 reuses
+`CatchModel` untouched, and every balance change stays in one Resource.
+
+Two decisions inside the view are load-bearing:
+
+- **The net's collision never rotates.** The handle and rim lean with horizontal
+  speed because p.12 asks for cloth weight, but a catch mouth that actually
+  tilted would read as unfairness the moment a ball skipped out of it. The lean
+  is cosmetic and says so in the file.
+- **`net_front.gd` exists purely for depth.** Back ropes behind the balls, balls,
+  then the near mesh on top. Without that third layer the catch reads as balls
+  floating in front of a net rather than sitting in one.
 
 ### `src/ui/`
 
