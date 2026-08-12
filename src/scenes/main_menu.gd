@@ -31,7 +31,7 @@ func _ready() -> void:
 
 	_room_view = Room2DView.new()
 	add_child(_room_view)
-	_room_view.setup(AmiApartment.build())
+	_room_view.setup(RoomIO.load_or_build("ami_apartment"))
 	# Frame the flat a little tight and a little high, so it sits behind the logo
 	# and *under* Ami's feet rather than floating in the middle of the screen.
 	_room_view.fit_zoom_boost = 1.24

@@ -20,13 +20,19 @@ var _pulse := 0.0
 
 
 func setup(p: PropDef) -> void:
+	# Called repeatedly by the editor after mutating the PropDef, so signal
+	# connection has to be idempotent.
 	prop = p
 	z_index = _sort_index()
 	_possession = GameState.possession
+	var connected := GameState.possession_changed.is_connected(_on_possession)
 	if prop.reacts_to_possession:
+		if not connected:
+			GameState.possession_changed.connect(_on_possession)
 		set_process(true)
-		GameState.possession_changed.connect(_on_possession)
 	else:
+		if connected:
+			GameState.possession_changed.disconnect(_on_possession)
 		set_process(false)
 	queue_redraw()
 

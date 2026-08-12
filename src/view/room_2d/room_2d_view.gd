@@ -35,6 +35,8 @@ var _camera: Camera2D
 var _modulate: CanvasModulate
 var _actor: Node2D
 var _props: Dictionary = {}       ## id -> Prop2D
+var _lights: Dictionary = {}      ## id -> PointLight2D
+var _ambient_on := true
 var _highlighted := ""
 var _mode: CameraMode = CameraMode.FIT
 var _light_texture: Texture2D
@@ -53,10 +55,12 @@ func setup(r: RoomModel) -> void:
 	for child in get_children():
 		child.queue_free()
 	_props.clear()
+	_lights.clear()
+	_highlighted = ""
 
 	# Night, indoors. Lights add warmth back on top of this.
 	_modulate = CanvasModulate.new()
-	_modulate.color = room.ambient_tint
+	_modulate.color = room.ambient_tint if _ambient_on else Color.WHITE
 	add_child(_modulate)
 
 	var floor_node := Floor2D.new()
@@ -69,8 +73,7 @@ func setup(r: RoomModel) -> void:
 		node.setup(prop)
 		if prop.id != "":
 			_props[prop.id] = node
-		if prop.light_energy > 0.0:
-			add_child(_make_light(prop))
+		_sync_light(prop)
 
 	for i in WISP_SPOTS.size():
 		var wisp := Wisp2D.new()
@@ -146,6 +149,8 @@ func _apply_camera(snap: bool) -> void:
 			_camera.zoom = Vector2(FOLLOW_ZOOM, FOLLOW_ZOOM)
 			if snap:
 				_camera.position = _clamp_camera(_camera_target)
+		CameraMode.FREE:
+			pass  # The editor drives the camera directly.
 
 
 ## Keep the room filling the frame; if the room is smaller than the view on an
@@ -165,18 +170,103 @@ func _clamp_camera(target: Vector2) -> Vector2:
 	return out
 
 
-func _make_light(prop: PropDef) -> PointLight2D:
-	var light := PointLight2D.new()
-	light.texture = _light_texture
+## Create, update or remove the PointLight2D for a prop, tracked by id so the
+## editor can retune lights live without rebuilding the whole room.
+func _sync_light(prop: PropDef) -> void:
+	var wants := prop.light_energy > 0.0 and prop.light_color.a > 0.0 and prop.id != ""
+	var has := _lights.has(prop.id)
+	if not wants:
+		if has:
+			_lights[prop.id].queue_free()
+			_lights.erase(prop.id)
+		return
+	var light: PointLight2D
+	if has:
+		light = _lights[prop.id]
+	else:
+		light = PointLight2D.new()
+		light.texture = _light_texture
+		light.blend_mode = Light2D.BLEND_MODE_ADD
+		add_child(light)
+		_lights[prop.id] = light
 	light.color = prop.light_color
 	light.energy = prop.light_energy
 	# light_scale is authored as a radius in world units; the falloff texture is
 	# 256 px wide and one world unit is Iso.TILE_W across, hence the conversion.
 	light.texture_scale = prop.light_scale * Iso.TILE_W * 2.0 / 256.0
-	light.blend_mode = Light2D.BLEND_MODE_ADD
 	light.position = Iso.to_screen(prop.centre() + prop.light_offset)
-	light.z_index = 0
-	return light
+
+
+# -- Editor support -------------------------------------------------------------
+# The editor mutates PropDefs in place and tells the view what changed. Nothing
+# below is used by gameplay scenes.
+
+func add_prop(prop: PropDef) -> void:
+	var node := Prop2D.new()
+	add_child(node)
+	node.setup(prop)
+	if prop.id != "":
+		_props[prop.id] = node
+	_sync_light(prop)
+
+
+func remove_prop(prop_id: String) -> void:
+	if _highlighted == prop_id:
+		highlight("")
+	if _props.has(prop_id):
+		_props[prop_id].queue_free()
+		_props.erase(prop_id)
+	if _lights.has(prop_id):
+		_lights[prop_id].queue_free()
+		_lights.erase(prop_id)
+
+
+## Re-read a mutated PropDef: recompute depth, redraw, retune its light.
+func refresh_prop(prop_id: String) -> void:
+	if not _props.has(prop_id):
+		return
+	var node: Node2D = _props[prop_id]
+	node.setup(node.prop)
+	node.highlighted = _highlighted == prop_id
+	_sync_light(node.prop)
+
+
+## Editor toggle: see the room without the night grade, for judging base colours.
+func set_ambient_enabled(on: bool) -> void:
+	_ambient_on = on
+	if _modulate:
+		_modulate.color = room.ambient_tint if on else Color.WHITE
+
+
+func camera_pan(screen_delta: Vector2) -> void:
+	if _camera:
+		_camera.position -= screen_delta / _camera.zoom.x
+
+
+func camera_zoom_by(factor: float) -> void:
+	if _camera:
+		var z := clampf(_camera.zoom.x * factor, 0.35, 3.5)
+		_camera.zoom = Vector2(z, z)
+
+
+func camera_center_ground() -> Vector3:
+	if _camera == null:
+		return Vector3.ZERO
+	return Iso.to_ground(_camera.position)
+
+
+func get_camera_state() -> Dictionary:
+	if _camera == null:
+		return {}
+	return {"pos": _camera.position, "zoom": _camera.zoom.x}
+
+
+func set_camera_state(state: Dictionary) -> void:
+	if _camera == null or state.is_empty():
+		return
+	_camera.position = state["pos"]
+	var z: float = state["zoom"]
+	_camera.zoom = Vector2(z, z)
 
 
 ## One shared radial falloff, generated so the repo carries no binary art yet.

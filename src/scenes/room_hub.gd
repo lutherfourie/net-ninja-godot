@@ -25,7 +25,7 @@ var _focus: PropDef = null
 
 
 func _ready() -> void:
-	room = AmiApartment.build()
+	room = RoomIO.load_or_build("ami_apartment")
 	body.position = room.spawn
 
 	_view = Room2DView.new()
@@ -73,8 +73,7 @@ func _ready() -> void:
 func _layout() -> void:
 	var vp := get_viewport_rect().size
 	var safe := Tokens.safe_rect(vp)
-	_stick.size = vp
-	_prompt.size = vp
+	# _stick and _prompt use full-rect anchors; the viewport sizes them itself.
 	_meter.position = Vector2(safe.position.x, safe.position.y)
 	_meter.size = Vector2(minf(220.0, safe.size.x * 0.55), 40.0)
 	_menu_button.custom_minimum_size = Vector2(112.0, 44.0)
@@ -119,6 +118,9 @@ func _unhandled_input(event: InputEvent) -> void:
 		_interact(_focus)
 	elif event.is_action_pressed("ui_cancel"):
 		SceneRouter.goto("menu")
+	elif event.is_action_pressed("debug_toggle"):
+		# Dev door: F1 flips the live room into the editor.
+		SceneRouter.goto("editor")
 	elif event is InputEventScreenTouch and event.pressed and _focus != null:
 		# On touch, tapping anywhere in the top half acts on the focused prop —
 		# the bottom half belongs to the thumb stick.

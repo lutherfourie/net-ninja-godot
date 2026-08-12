@@ -11,6 +11,7 @@ extends Node2D
 enum CameraMode {
 	FIT,     ## Frame the whole room — used by the menu backdrop
 	FOLLOW,  ## Track the actor — used in the hub
+	FREE,    ## Wherever it was put — used by the room editor
 }
 
 

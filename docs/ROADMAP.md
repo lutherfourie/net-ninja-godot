@@ -42,7 +42,25 @@ the player is closest to winning. The outcome writes back to
   for one more catch — is the loop. If it stops being a real decision, raise
   `net_capacity` or lower `cleanse_per_ball` rather than touching the cadence.
 
+## Shipped — v0.3.0: the room editor
+
+Greyboxing stopped being a code edit. F1 in the hub opens an in-game editor on
+the live room: click/cycle select, ground drag with 0.05 snap, shift-drag for
+height, an inspector for every PropDef field with palette-only swatches and
+semantic light presets, snapshot undo, and Ctrl+S straight into
+`data/rooms/ami_apartment.json`. The hub and menu load that JSON through
+`RoomIO` with the old code builder as fallback. See docs/EDITOR.md.
+
 ## Next
+
+**Net play rework (queued, per Luther):** rebuild the catch net in the
+"net-ninja" style out of Godot-native physics — a short joint chain of
+RigidBody2D segments (PinJoint2D / DampedSpringJoint2D) so the bag genuinely
+deforms and swings under load, with restrained damping per PDF p.12 so touch
+control stays immediate. `CatchModel` is untouched by design; this is a
+`net_body.gd` replacement plus tuning. The fairness rule survives: the *mouth*
+of the net stays predictable even while the bag swings.
+
 
 | | |
 | --- | --- |

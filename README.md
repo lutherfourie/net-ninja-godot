@@ -22,6 +22,7 @@ directly against `docs/NetNinja_Visual_Foundation_v0.2.pdf`. Portrait mobile,
 | **Interaction** | Proximity prompts on the PC, Miso, the bookshelf, the tea and the front door. Clearing a contract lifts the curse on the flat; losing one deepens it, and the room visibly reacts either way. |
 | **Input** | WASD / arrows / gamepad, plus an on-screen thumb stick for touch in the hub and a one-axis drag in the catch loop. `E` or tap to interact, `Esc` to back out. |
 | **Accessibility** | Reduce-motion and high-contrast toggles wired through `GameState`, plus a curse-level slider for eyeballing the possession states. |
+| **Room editor** | Press `F1` in the hub: select, drag, retune and relight the flat live, then `F1` again to play it. Rooms are JSON in `data/rooms/`, so a layout change is a readable diff. See [docs/EDITOR.md](docs/EDITOR.md). |
 
 ## Running it
 

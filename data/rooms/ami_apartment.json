@@ -1,0 +1,1112 @@
+{
+	"ambient_tint": "998599ff",
+	"bounds": [
+		15.0,
+		4.59999990463257,
+		13.3999996185303
+	],
+	"display_name": "Ami's Flat",
+	"format": 1,
+	"id": "ami_apartment",
+	"props": [
+		{
+			"accent_color": "00000000",
+			"base_color": "4d3f5cff",
+			"blocks": true,
+			"decal": "",
+			"id": "wall_left",
+			"interact_id": "",
+			"interact_label": "",
+			"interact_radius": 1.6,
+			"kind": "WALL",
+			"light_color": "00000000",
+			"light_energy": 0.0,
+			"light_offset": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"light_scale": 1.0,
+			"origin": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"reacts_to_possession": false,
+			"size": [
+				0.400000005960464,
+				4.59999990463257,
+				13.3999996185303
+			]
+		},
+		{
+			"accent_color": "00000000",
+			"base_color": "574170ff",
+			"blocks": true,
+			"decal": "",
+			"id": "wall_right",
+			"interact_id": "",
+			"interact_label": "",
+			"interact_radius": 1.6,
+			"kind": "WALL",
+			"light_color": "00000000",
+			"light_energy": 0.0,
+			"light_offset": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"light_scale": 1.0,
+			"origin": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"reacts_to_possession": false,
+			"size": [
+				15.0,
+				4.59999990463257,
+				0.400000005960464
+			]
+		},
+		{
+			"accent_color": "00000000",
+			"base_color": "2c2136ff",
+			"blocks": false,
+			"decal": "",
+			"id": "skirting_left",
+			"interact_id": "",
+			"interact_label": "",
+			"interact_radius": 1.6,
+			"kind": "WALL",
+			"light_color": "00000000",
+			"light_energy": 0.0,
+			"light_offset": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"light_scale": 1.0,
+			"origin": [
+				0.400000005960464,
+				0.0,
+				0.400000005960464
+			],
+			"reacts_to_possession": false,
+			"size": [
+				0.119999997317791,
+				0.400000005960464,
+				13.0
+			]
+		},
+		{
+			"accent_color": "e6a45bff",
+			"base_color": "6b4630ff",
+			"blocks": false,
+			"decal": "door",
+			"id": "door",
+			"interact_id": "front_door",
+			"interact_label": "Leave for a contract",
+			"interact_radius": 1.8,
+			"kind": "BOX",
+			"light_color": "00000000",
+			"light_energy": 0.0,
+			"light_offset": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"light_scale": 1.0,
+			"origin": [
+				0.0799999982118607,
+				0.0,
+				0.899999976158142
+			],
+			"reacts_to_possession": false,
+			"size": [
+				0.340000003576279,
+				2.90000009536743,
+				1.70000004768372
+			]
+		},
+		{
+			"accent_color": "00000000",
+			"base_color": "5b3a28ff",
+			"blocks": false,
+			"decal": "hooks",
+			"id": "coat_hooks",
+			"interact_id": "",
+			"interact_label": "",
+			"interact_radius": 1.6,
+			"kind": "BOX",
+			"light_color": "00000000",
+			"light_energy": 0.0,
+			"light_offset": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"light_scale": 1.0,
+			"origin": [
+				0.419999986886978,
+				2.20000004768372,
+				2.90000009536743
+			],
+			"reacts_to_possession": false,
+			"size": [
+				0.100000001490116,
+				0.5,
+				0.899999976158142
+			]
+		},
+		{
+			"accent_color": "e6a45bff",
+			"base_color": "3a2c22ff",
+			"blocks": false,
+			"decal": "",
+			"id": "wall_lantern",
+			"interact_id": "",
+			"interact_label": "",
+			"interact_radius": 1.6,
+			"kind": "BOX",
+			"light_color": "e6a45bff",
+			"light_energy": 0.85,
+			"light_offset": [
+				0.200000002980232,
+				0.100000001490116,
+				0.200000002980232
+			],
+			"light_scale": 2.8,
+			"origin": [
+				0.439999997615814,
+				2.59999990463257,
+				0.5
+			],
+			"reacts_to_possession": false,
+			"size": [
+				0.360000014305115,
+				0.600000023841858,
+				0.360000014305115
+			]
+		},
+		{
+			"accent_color": "00000000",
+			"base_color": "5f3d29ff",
+			"blocks": true,
+			"decal": "books",
+			"id": "bookshelf",
+			"interact_id": "bookshelf",
+			"interact_label": "Read up on demonology",
+			"interact_radius": 1.6,
+			"kind": "BOX",
+			"light_color": "00000000",
+			"light_energy": 0.0,
+			"light_offset": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"light_scale": 1.0,
+			"origin": [
+				0.5,
+				0.0,
+				3.5
+			],
+			"reacts_to_possession": false,
+			"size": [
+				1.10000002384186,
+				3.20000004768372,
+				2.20000004768372
+			]
+		},
+		{
+			"accent_color": "8fb3d9ff",
+			"base_color": "20304aff",
+			"blocks": false,
+			"decal": "window",
+			"id": "window",
+			"interact_id": "",
+			"interact_label": "",
+			"interact_radius": 1.6,
+			"kind": "BOX",
+			"light_color": "6f8fc4ff",
+			"light_energy": 0.5,
+			"light_offset": [
+				0.600000023841858,
+				-0.600000023841858,
+				1.20000004768372
+			],
+			"light_scale": 3.8,
+			"origin": [
+				0.0599999986588955,
+				1.89999997615814,
+				6.19999980926514
+			],
+			"reacts_to_possession": false,
+			"size": [
+				0.360000014305115,
+				2.0,
+				2.40000009536743
+			]
+		},
+		{
+			"accent_color": "c87985ff",
+			"base_color": "8a7a68ff",
+			"blocks": true,
+			"decal": "cushions",
+			"id": "sofa",
+			"interact_id": "",
+			"interact_label": "",
+			"interact_radius": 1.6,
+			"kind": "SOFT",
+			"light_color": "00000000",
+			"light_energy": 0.0,
+			"light_offset": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"light_scale": 1.0,
+			"origin": [
+				0.75,
+				0.0,
+				6.0
+			],
+			"reacts_to_possession": false,
+			"size": [
+				2.0,
+				1.14999997615814,
+				3.59999990463257
+			]
+		},
+		{
+			"accent_color": "00000000",
+			"base_color": "6b4630ff",
+			"blocks": true,
+			"decal": "",
+			"id": "side_table",
+			"interact_id": "",
+			"interact_label": "",
+			"interact_radius": 1.6,
+			"kind": "BOX",
+			"light_color": "00000000",
+			"light_energy": 0.0,
+			"light_offset": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"light_scale": 1.0,
+			"origin": [
+				0.800000011920929,
+				0.0,
+				10.1000003814697
+			],
+			"reacts_to_possession": false,
+			"size": [
+				1.10000002384186,
+				0.850000023841858,
+				1.10000002384186
+			]
+		},
+		{
+			"accent_color": "e6a45bff",
+			"base_color": "4a3524ff",
+			"blocks": false,
+			"decal": "lamp",
+			"id": "table_lamp",
+			"interact_id": "",
+			"interact_label": "",
+			"interact_radius": 1.6,
+			"kind": "BOX",
+			"light_color": "e6a45bff",
+			"light_energy": 1.1,
+			"light_offset": [
+				0.300000011920929,
+				0.5,
+				0.300000011920929
+			],
+			"light_scale": 4.6,
+			"origin": [
+				1.04999995231628,
+				0.850000023841858,
+				10.3500003814697
+			],
+			"reacts_to_possession": false,
+			"size": [
+				0.600000023841858,
+				0.850000023841858,
+				0.600000023841858
+			]
+		},
+		{
+			"accent_color": "00000000",
+			"base_color": "5f3d29ff",
+			"blocks": false,
+			"decal": "shelf_books",
+			"id": "wall_shelf",
+			"interact_id": "",
+			"interact_label": "",
+			"interact_radius": 1.6,
+			"kind": "BOX",
+			"light_color": "00000000",
+			"light_energy": 0.0,
+			"light_offset": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"light_scale": 1.0,
+			"origin": [
+				2.59999990463257,
+				3.0,
+				0.419999986886978
+			],
+			"reacts_to_possession": false,
+			"size": [
+				2.40000009536743,
+				0.159999996423721,
+				0.600000023841858
+			]
+		},
+		{
+			"accent_color": "00000000",
+			"base_color": "6b4630ff",
+			"blocks": true,
+			"decal": "",
+			"id": "desk",
+			"interact_id": "",
+			"interact_label": "",
+			"interact_radius": 1.6,
+			"kind": "BOX",
+			"light_color": "00000000",
+			"light_energy": 0.0,
+			"light_offset": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"light_scale": 1.0,
+			"origin": [
+				2.29999995231628,
+				0.0,
+				0.5
+			],
+			"reacts_to_possession": false,
+			"size": [
+				3.70000004768372,
+				1.0,
+				1.60000002384186
+			]
+		},
+		{
+			"accent_color": "8c5bc2ff",
+			"base_color": "241d2eff",
+			"blocks": false,
+			"decal": "screen",
+			"id": "monitor",
+			"interact_id": "pc",
+			"interact_label": "Open the contract inbox",
+			"interact_radius": 2.2,
+			"kind": "BOX",
+			"light_color": "8c5bc2ff",
+			"light_energy": 1.1,
+			"light_offset": [
+				0.75,
+				0.5,
+				0.899999976158142
+			],
+			"light_scale": 4.0,
+			"origin": [
+				3.0,
+				1.0,
+				0.75
+			],
+			"reacts_to_possession": true,
+			"size": [
+				1.5,
+				1.0,
+				0.180000007152557
+			]
+		},
+		{
+			"accent_color": "8c5bc2ff",
+			"base_color": "2b2338ff",
+			"blocks": false,
+			"decal": "tower",
+			"id": "pc_tower",
+			"interact_id": "",
+			"interact_label": "",
+			"interact_radius": 1.6,
+			"kind": "BOX",
+			"light_color": "8c5bc2ff",
+			"light_energy": 0.85,
+			"light_offset": [
+				0.300000011920929,
+				0.5,
+				0.5
+			],
+			"light_scale": 2.4,
+			"origin": [
+				4.75,
+				1.0,
+				0.699999988079071
+			],
+			"reacts_to_possession": true,
+			"size": [
+				0.600000023841858,
+				1.20000004768372,
+				1.0
+			]
+		},
+		{
+			"accent_color": "75d0b1ff",
+			"base_color": "35293fff",
+			"blocks": false,
+			"decal": "keyboard",
+			"id": "keyboard",
+			"interact_id": "",
+			"interact_label": "",
+			"interact_radius": 1.6,
+			"kind": "BOX",
+			"light_color": "00000000",
+			"light_energy": 0.0,
+			"light_offset": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"light_scale": 1.0,
+			"origin": [
+				3.09999990463257,
+				1.0,
+				1.35000002384186
+			],
+			"reacts_to_possession": false,
+			"size": [
+				1.29999995231628,
+				0.100000001490116,
+				0.449999988079071
+			]
+		},
+		{
+			"accent_color": "e6a45bff",
+			"base_color": "3a2c22ff",
+			"blocks": false,
+			"decal": "lamp",
+			"id": "desk_lamp",
+			"interact_id": "",
+			"interact_label": "",
+			"interact_radius": 1.6,
+			"kind": "BOX",
+			"light_color": "e6a45bff",
+			"light_energy": 0.8,
+			"light_offset": [
+				0.200000002980232,
+				0.600000023841858,
+				0.400000005960464
+			],
+			"light_scale": 3.4,
+			"origin": [
+				2.45000004768372,
+				1.0,
+				0.75
+			],
+			"reacts_to_possession": false,
+			"size": [
+				0.340000003576279,
+				1.0,
+				0.340000003576279
+			]
+		},
+		{
+			"accent_color": "00000000",
+			"base_color": "3f3348ff",
+			"blocks": true,
+			"decal": "",
+			"id": "desk_chair",
+			"interact_id": "",
+			"interact_label": "",
+			"interact_radius": 1.6,
+			"kind": "SOFT",
+			"light_color": "00000000",
+			"light_energy": 0.0,
+			"light_offset": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"light_scale": 1.0,
+			"origin": [
+				3.5,
+				0.0,
+				2.40000009536743
+			],
+			"reacts_to_possession": false,
+			"size": [
+				1.0,
+				1.14999997615814,
+				1.0
+			]
+		},
+		{
+			"accent_color": "00000000",
+			"base_color": "5f3d29ff",
+			"blocks": true,
+			"decal": "drawers",
+			"id": "drawers",
+			"interact_id": "",
+			"interact_label": "",
+			"interact_radius": 1.6,
+			"kind": "BOX",
+			"light_color": "00000000",
+			"light_energy": 0.0,
+			"light_offset": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"light_scale": 1.0,
+			"origin": [
+				6.19999980926514,
+				0.0,
+				0.550000011920929
+			],
+			"reacts_to_possession": false,
+			"size": [
+				1.39999997615814,
+				1.39999997615814,
+				1.29999995231628
+			]
+		},
+		{
+			"accent_color": "8c5bc2ff",
+			"base_color": "120e1aff",
+			"blocks": false,
+			"decal": "shadow_cat",
+			"id": "cat_shadow",
+			"interact_id": "",
+			"interact_label": "",
+			"interact_radius": 1.6,
+			"kind": "BOX",
+			"light_color": "00000000",
+			"light_energy": 0.0,
+			"light_offset": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"light_scale": 1.0,
+			"origin": [
+				7.90000009536743,
+				1.10000002384186,
+				0.409999996423721
+			],
+			"reacts_to_possession": true,
+			"size": [
+				2.59999990463257,
+				2.79999995231628,
+				0.0199999995529652
+			]
+		},
+		{
+			"accent_color": "c87985ff",
+			"base_color": "977d7cff",
+			"blocks": true,
+			"decal": "cat_tree",
+			"id": "cat_tree",
+			"interact_id": "cat_tree",
+			"interact_label": "Straighten the scratching post",
+			"interact_radius": 1.6,
+			"kind": "SOFT",
+			"light_color": "00000000",
+			"light_energy": 0.0,
+			"light_offset": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"light_scale": 1.0,
+			"origin": [
+				10.3999996185303,
+				0.0,
+				0.899999976158142
+			],
+			"reacts_to_possession": false,
+			"size": [
+				2.09999990463257,
+				3.5,
+				2.09999990463257
+			]
+		},
+		{
+			"accent_color": "00000000",
+			"base_color": "8e8172ff",
+			"blocks": true,
+			"decal": "cave",
+			"id": "cat_cave",
+			"interact_id": "",
+			"interact_label": "",
+			"interact_radius": 1.6,
+			"kind": "SOFT",
+			"light_color": "00000000",
+			"light_energy": 0.0,
+			"light_offset": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"light_scale": 1.0,
+			"origin": [
+				10.8999996185303,
+				0.0,
+				3.59999990463257
+			],
+			"reacts_to_possession": false,
+			"size": [
+				1.89999997615814,
+				1.5,
+				1.89999997615814
+			]
+		},
+		{
+			"accent_color": "d85f57ff",
+			"base_color": "6b4630ff",
+			"blocks": true,
+			"decal": "toys",
+			"id": "toy_crate",
+			"interact_id": "",
+			"interact_label": "",
+			"interact_radius": 1.6,
+			"kind": "BOX",
+			"light_color": "00000000",
+			"light_energy": 0.0,
+			"light_offset": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"light_scale": 1.0,
+			"origin": [
+				12.6999998092651,
+				0.0,
+				2.09999990463257
+			],
+			"reacts_to_possession": false,
+			"size": [
+				1.29999995231628,
+				0.899999976158142,
+				1.29999995231628
+			]
+		},
+		{
+			"accent_color": "4e7a52ff",
+			"base_color": "6b4630ff",
+			"blocks": true,
+			"decal": "leaves",
+			"id": "plant_corner",
+			"interact_id": "",
+			"interact_label": "",
+			"interact_radius": 1.6,
+			"kind": "ROUND",
+			"light_color": "00000000",
+			"light_energy": 0.0,
+			"light_offset": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"light_scale": 1.0,
+			"origin": [
+				12.8999996185303,
+				0.0,
+				5.40000009536743
+			],
+			"reacts_to_possession": false,
+			"size": [
+				1.5,
+				2.20000004768372,
+				1.5
+			]
+		},
+		{
+			"accent_color": "00000000",
+			"base_color": "52407aff",
+			"blocks": true,
+			"decal": "",
+			"id": "storage_box",
+			"interact_id": "",
+			"interact_label": "",
+			"interact_radius": 1.6,
+			"kind": "BOX",
+			"light_color": "00000000",
+			"light_energy": 0.0,
+			"light_offset": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"light_scale": 1.0,
+			"origin": [
+				9.30000019073486,
+				0.0,
+				3.29999995231628
+			],
+			"reacts_to_possession": false,
+			"size": [
+				1.0,
+				0.800000011920929,
+				1.0
+			]
+		},
+		{
+			"accent_color": "c87985ff",
+			"base_color": "824f56ff",
+			"blocks": false,
+			"decal": "",
+			"id": "rug",
+			"interact_id": "",
+			"interact_label": "",
+			"interact_radius": 1.6,
+			"kind": "RUG",
+			"light_color": "00000000",
+			"light_energy": 0.0,
+			"light_offset": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"light_scale": 1.0,
+			"origin": [
+				2.90000009536743,
+				0.0,
+				6.40000009536743
+			],
+			"reacts_to_possession": false,
+			"size": [
+				4.80000019073486,
+				0.0299999993294477,
+				4.40000009536743
+			]
+		},
+		{
+			"accent_color": "f4e7d3ff",
+			"base_color": "7a4f34ff",
+			"blocks": true,
+			"decal": "mug",
+			"id": "coffee_table",
+			"interact_id": "tea",
+			"interact_label": "Finish the tea",
+			"interact_radius": 1.6,
+			"kind": "BOX",
+			"light_color": "00000000",
+			"light_energy": 0.0,
+			"light_offset": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"light_scale": 1.0,
+			"origin": [
+				3.5,
+				0.0,
+				7.19999980926514
+			],
+			"reacts_to_possession": false,
+			"size": [
+				2.5,
+				0.75,
+				1.89999997615814
+			]
+		},
+		{
+			"accent_color": "c87985ff",
+			"base_color": "905760ff",
+			"blocks": false,
+			"decal": "",
+			"id": "cat_rug",
+			"interact_id": "",
+			"interact_label": "",
+			"interact_radius": 1.6,
+			"kind": "RUG",
+			"light_color": "00000000",
+			"light_energy": 0.0,
+			"light_offset": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"light_scale": 1.0,
+			"origin": [
+				6.40000009536743,
+				0.0,
+				9.19999980926514
+			],
+			"reacts_to_possession": false,
+			"size": [
+				2.40000009536743,
+				0.0299999993294477,
+				2.40000009536743
+			]
+		},
+		{
+			"accent_color": "e6a45bff",
+			"base_color": "15121cff",
+			"blocks": false,
+			"decal": "cat",
+			"id": "miso",
+			"interact_id": "cat",
+			"interact_label": "Pet Miso",
+			"interact_radius": 1.9,
+			"kind": "ROUND",
+			"light_color": "00000000",
+			"light_energy": 0.0,
+			"light_offset": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"light_scale": 1.0,
+			"origin": [
+				6.94999980926514,
+				0.0,
+				9.75
+			],
+			"reacts_to_possession": true,
+			"size": [
+				1.29999995231628,
+				0.550000011920929,
+				1.10000002384186
+			]
+		},
+		{
+			"accent_color": "c87985ff",
+			"base_color": "a3888aff",
+			"blocks": true,
+			"decal": "cat_chair",
+			"id": "cat_ear_chair",
+			"interact_id": "",
+			"interact_label": "",
+			"interact_radius": 1.6,
+			"kind": "SOFT",
+			"light_color": "00000000",
+			"light_energy": 0.0,
+			"light_offset": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"light_scale": 1.0,
+			"origin": [
+				2.5,
+				0.0,
+				3.20000004768372
+			],
+			"reacts_to_possession": false,
+			"size": [
+				1.60000002384186,
+				1.20000004768372,
+				1.60000002384186
+			]
+		},
+		{
+			"accent_color": "00000000",
+			"base_color": "4a4050ff",
+			"blocks": false,
+			"decal": "",
+			"id": "door_mat",
+			"interact_id": "",
+			"interact_label": "",
+			"interact_radius": 1.6,
+			"kind": "RUG",
+			"light_color": "00000000",
+			"light_energy": 0.0,
+			"light_offset": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"light_scale": 1.0,
+			"origin": [
+				1.5,
+				0.0,
+				1.0
+			],
+			"reacts_to_possession": false,
+			"size": [
+				1.5,
+				0.0199999995529652,
+				1.5
+			]
+		},
+		{
+			"accent_color": "00000000",
+			"base_color": "a0616aff",
+			"blocks": false,
+			"decal": "",
+			"id": "slippers",
+			"interact_id": "",
+			"interact_label": "",
+			"interact_radius": 1.6,
+			"kind": "BOX",
+			"light_color": "00000000",
+			"light_energy": 0.0,
+			"light_offset": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"light_scale": 1.0,
+			"origin": [
+				1.70000004768372,
+				0.0,
+				2.70000004768372
+			],
+			"reacts_to_possession": false,
+			"size": [
+				0.550000011920929,
+				0.159999996423721,
+				0.5
+			]
+		},
+		{
+			"accent_color": "4e7a52ff",
+			"base_color": "5f3d29ff",
+			"blocks": false,
+			"decal": "leaves",
+			"id": "plant_shelf",
+			"interact_id": "",
+			"interact_label": "",
+			"interact_radius": 1.6,
+			"kind": "ROUND",
+			"light_color": "00000000",
+			"light_energy": 0.0,
+			"light_offset": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"light_scale": 1.0,
+			"origin": [
+				0.550000011920929,
+				2.5,
+				8.89999961853027
+			],
+			"reacts_to_possession": false,
+			"size": [
+				0.800000011920929,
+				1.10000002384186,
+				0.800000011920929
+			]
+		},
+		{
+			"accent_color": "59865cff",
+			"base_color": "6b4630ff",
+			"blocks": true,
+			"decal": "leaves",
+			"id": "plant_sofa",
+			"interact_id": "",
+			"interact_label": "",
+			"interact_radius": 1.6,
+			"kind": "ROUND",
+			"light_color": "00000000",
+			"light_energy": 0.0,
+			"light_offset": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"light_scale": 1.0,
+			"origin": [
+				1.0,
+				0.0,
+				11.6000003814697
+			],
+			"reacts_to_possession": false,
+			"size": [
+				1.20000004768372,
+				1.79999995231628,
+				1.20000004768372
+			]
+		},
+		{
+			"accent_color": "00000000",
+			"base_color": "d85f57ff",
+			"blocks": false,
+			"decal": "",
+			"id": "toy_ball",
+			"interact_id": "",
+			"interact_label": "",
+			"interact_radius": 1.6,
+			"kind": "ROUND",
+			"light_color": "00000000",
+			"light_energy": 0.0,
+			"light_offset": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"light_scale": 1.0,
+			"origin": [
+				8.30000019073486,
+				0.0,
+				11.1000003814697
+			],
+			"reacts_to_possession": false,
+			"size": [
+				0.340000003576279,
+				0.340000003576279,
+				0.340000003576279
+			]
+		},
+		{
+			"accent_color": "f4e7d3ff",
+			"base_color": "4a3f63ff",
+			"blocks": false,
+			"decal": "books",
+			"id": "book_stack",
+			"interact_id": "",
+			"interact_label": "",
+			"interact_radius": 1.6,
+			"kind": "BOX",
+			"light_color": "00000000",
+			"light_energy": 0.0,
+			"light_offset": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"light_scale": 1.0,
+			"origin": [
+				6.5,
+				1.39999997615814,
+				0.699999988079071
+			],
+			"reacts_to_possession": false,
+			"size": [
+				0.699999988079071,
+				0.349999994039536,
+				0.600000023841858
+			]
+		}
+	],
+	"spawn": [
+		6.19999980926514,
+		0.0,
+		6.40000009536743
+	],
+	"walk_rects": [
+		[
+			0.5,
+			0.5,
+			14.0,
+			9.0
+		],
+		[
+			0.5,
+			9.5,
+			9.0,
+			3.5
+		]
+	]
+}
