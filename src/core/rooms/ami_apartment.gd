@@ -21,11 +21,13 @@ static func build() -> RoomModel:
 	room.spawn = Vector3(6.2, 0.0, 6.4)
 	room.ambient_tint = Color(0.60, 0.52, 0.60)
 
-	# L-shaped floor: the front-right corner is cut away, which is what gives the
-	# reference render its stepped silhouette.
+	# Reference silhouette: a full rectangle, a small notch bitten out of the
+	# bottom-centre-left, the right side reaching lowest (under the cat rug),
+	# and a short left extension carrying the side table and lamp.
 	room.walk_rects = [
-		Rect2(0.5, 0.5, 14.0, 9.0),
-		Rect2(0.5, 9.5, 9.0, 3.5),
+		Rect2(0.5, 0.5, 14.0, 10.0),
+		Rect2(8.0, 10.5, 6.5, 2.4),
+		Rect2(0.5, 10.5, 3.2, 1.8),
 	]
 
 	_walls(room)
@@ -186,19 +188,19 @@ static func _desk_and_pc(room: RoomModel) -> void:
 static func _cat_corner(room: RoomModel) -> void:
 	room.add(PropDef.make({
 		"id": "cat_tree", "kind": PropDef.Kind.SOFT,
-		"origin": Vector3(10.4, 0, 0.9), "size": Vector3(2.1, 3.5, 2.1),
+		"origin": Vector3(11.0, 0, 1.2), "size": Vector3(2.1, 3.5, 2.1),
 		"base_color": Color("977d7c"), "accent_color": Palette.DUSTY_ROSE,
 		"decal": "cat_tree", "blocks": true,
 		"interact_id": "cat_tree", "interact_label": "Straighten the scratching post",
 	}))
 	room.add(PropDef.make({
 		"id": "cat_cave", "kind": PropDef.Kind.SOFT,
-		"origin": Vector3(10.9, 0, 3.6), "size": Vector3(1.9, 1.5, 1.9),
+		"origin": Vector3(11.5, 0, 4.0), "size": Vector3(1.9, 1.5, 1.9),
 		"base_color": Color("8e8172"), "blocks": true, "decal": "cave",
 	}))
 	room.add(PropDef.make({
 		"id": "toy_crate", "kind": PropDef.Kind.BOX,
-		"origin": Vector3(12.7, 0, 2.1), "size": Vector3(1.3, 0.9, 1.3),
+		"origin": Vector3(10.7, 0, 8.9), "size": Vector3(1.3, 0.9, 1.3),
 		"base_color": Color("6b4630"), "accent_color": Palette.WARNING_CORAL,
 		"blocks": true, "decal": "toys",
 	}))
@@ -210,7 +212,7 @@ static func _cat_corner(room: RoomModel) -> void:
 	}))
 	room.add(PropDef.make({
 		"id": "storage_box", "kind": PropDef.Kind.BOX,
-		"origin": Vector3(9.3, 0, 3.3), "size": Vector3(1.0, 0.8, 1.0),
+		"origin": Vector3(12.4, 0, 7.0), "size": Vector3(1.2, 1.0, 1.2),
 		"base_color": Color("52407a"), "blocks": true,
 	}))
 
@@ -220,36 +222,59 @@ static func _cat_corner(room: RoomModel) -> void:
 static func _living_area(room: RoomModel) -> void:
 	room.add(PropDef.make({
 		"id": "rug", "kind": PropDef.Kind.RUG,
-		"origin": Vector3(2.9, 0, 6.4), "size": Vector3(4.8, 0.03, 4.4),
+		"origin": Vector3(2.6, 0, 5.9), "size": Vector3(4.6, 0.03, 4.6),
 		"base_color": Palette.DUSTY_ROSE.darkened(0.35),
-		"accent_color": Palette.DUSTY_ROSE, "blocks": false,
+		"accent_color": Palette.DUSTY_ROSE, "blocks": false, "decal": "round",
 	}))
 	room.add(PropDef.make({
-		"id": "coffee_table", "kind": PropDef.Kind.BOX,
-		"origin": Vector3(3.5, 0, 7.2), "size": Vector3(2.5, 0.75, 1.9),
+		"id": "coffee_table", "kind": PropDef.Kind.ROUND,
+		"origin": Vector3(3.9, 0, 7.2), "size": Vector3(2.1, 0.72, 2.1),
 		"base_color": Color("7a4f34"), "accent_color": Palette.HEARTH_CREAM,
 		"blocks": true, "decal": "mug",
 		"interact_id": "tea", "interact_label": "Finish the tea",
 	}))
 	room.add(PropDef.make({
 		"id": "cat_rug", "kind": PropDef.Kind.RUG,
-		"origin": Vector3(6.4, 0, 9.2), "size": Vector3(2.4, 0.03, 2.4),
+		"origin": Vector3(7.3, 0, 7.9), "size": Vector3(2.6, 0.03, 2.6),
 		"base_color": Palette.DUSTY_ROSE.darkened(0.28),
-		"accent_color": Palette.DUSTY_ROSE, "blocks": false,
+		"accent_color": Palette.DUSTY_ROSE, "blocks": false, "decal": "round",
 	}))
 	room.add(PropDef.make({
 		"id": "miso", "kind": PropDef.Kind.ROUND,
-		"origin": Vector3(6.95, 0, 9.75), "size": Vector3(1.3, 0.55, 1.1),
+		"origin": Vector3(7.95, 0, 8.55), "size": Vector3(1.3, 0.55, 1.1),
 		"base_color": Color("15121c"), "accent_color": Palette.WARM_AMBER,
 		"blocks": false, "decal": "cat", "reacts_to_possession": true,
 		"interact_id": "cat", "interact_label": "Pet Miso",
 		"interact_radius": 1.9,
 	}))
 	room.add(PropDef.make({
-		"id": "cat_ear_chair", "kind": PropDef.Kind.SOFT,
-		"origin": Vector3(2.5, 0, 3.2), "size": Vector3(1.6, 1.2, 1.6),
-		"base_color": Color("a3888a"), "accent_color": Palette.DUSTY_ROSE,
+		"id": "cat_ear_bed", "kind": PropDef.Kind.SOFT,
+		"origin": Vector3(2.9, 0, 3.0), "size": Vector3(1.5, 0.85, 1.5),
+		"base_color": Color("e2d7c8"), "accent_color": Palette.DUSTY_ROSE,
 		"blocks": true, "decal": "cat_chair",
+	}))
+	# The namesake, leaning at the desk exactly where the render puts it.
+	room.add(PropDef.make({
+		"id": "hand_net", "kind": PropDef.Kind.BOX,
+		"origin": Vector3(1.85, 0, 1.7), "size": Vector3(0.65, 2.05, 0.7),
+		"base_color": Color(0, 0, 0, 0), "blocks": false, "decal": "handnet",
+		"interact_id": "hand_net", "interact_label": "Take the net",
+		"interact_radius": 1.7,
+	}))
+	room.add(PropDef.make({
+		"id": "string_lights", "kind": PropDef.Kind.BOX,
+		"origin": Vector3(0.06, 3.15, 2.9), "size": Vector3(0.38, 0.3, 3.6),
+		"base_color": Color(0, 0, 0, 0), "blocks": false, "decal": "string_lights",
+	}))
+	room.add(PropDef.make({
+		"id": "wall_frames", "kind": PropDef.Kind.BOX,
+		"origin": Vector3(0.06, 2.1, 3.0), "size": Vector3(0.38, 0.5, 1.0),
+		"base_color": Color(0, 0, 0, 0), "blocks": false, "decal": "frames",
+	}))
+	room.add(PropDef.make({
+		"id": "mouse_toy", "kind": PropDef.Kind.BOX,
+		"origin": Vector3(9.9, 0, 10.9), "size": Vector3(0.5, 0.15, 0.4),
+		"base_color": Color(0, 0, 0, 0), "blocks": false, "decal": "mouse_toy",
 	}))
 
 
@@ -280,7 +305,7 @@ static func _clutter(room: RoomModel) -> void:
 	}))
 	room.add(PropDef.make({
 		"id": "toy_ball", "kind": PropDef.Kind.ROUND,
-		"origin": Vector3(8.3, 0, 11.1), "size": Vector3(0.34, 0.34, 0.34),
+		"origin": Vector3(9.0, 0, 11.3), "size": Vector3(0.34, 0.34, 0.34),
 		"base_color": Palette.WARNING_CORAL, "blocks": false,
 	}))
 	room.add(PropDef.make({

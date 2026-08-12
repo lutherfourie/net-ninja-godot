@@ -109,6 +109,18 @@ func _draw_box() -> void:
 
 func _draw_flat() -> void:
 	var base := _base_colour()
+	# Reference pass: "round" rugs are the concept render's anchor shapes.
+	if prop.decal == "round":
+		var c := prop.centre()
+		var at := Iso.to_screen(Vector3(c.x, prop.origin.y + 0.01, c.z))
+		var rx := prop.size.x * Iso.TILE_W * 0.36
+		var ry := prop.size.z * Iso.TILE_H * 0.36
+		draw_colored_polygon(_ellipse(at, rx, ry), base)
+		if prop.accent_color.a > 0.0:
+			var ring := _ellipse(at, rx * 0.72, ry * 0.72)
+			ring.append(ring[0])
+			draw_polyline(ring, prop.accent_color.darkened(0.08), 3.0, true)
+		return
 	var top := Iso.top_face(prop.origin, prop.size)
 	draw_colored_polygon(top, base)
 	if prop.accent_color.a > 0.0:
@@ -185,6 +197,10 @@ func _draw_decal() -> void:
 		"hooks": _decal_hooks()
 		"toys": _decal_toys()
 		"cave": _decal_cave()
+		"handnet": _decal_handnet()
+		"string_lights": _decal_string_lights()
+		"frames": _decal_frames()
+		"mouse_toy": _decal_mouse_toy()
 		_: pass
 
 
@@ -481,3 +497,82 @@ func _decal_cave() -> void:
 	var s := prop.size
 	var mouth := Iso.to_screen(Vector3(o.x + s.x * 0.5, s.y * 0.32, o.z + s.z))
 	draw_circle(mouth, 13.0, Color(0.06, 0.05, 0.09, 0.9))
+
+
+## Ami's butterfly net, leaning against the desk — the game's namesake prop
+## (reference render: pole down-left, hoop up-right with pale mesh).
+func _decal_handnet() -> void:
+	# Base on the floor front-right, tip leaning back-left onto the desk edge —
+	# the reference's diagonal, kept modest so it reads as a propped tool.
+	var o := prop.origin
+	var base := Iso.to_screen(Vector3(o.x + prop.size.x * 0.9, 0.0, o.z + prop.size.z * 0.9))
+	var tip := Iso.to_screen(Vector3(o.x + 0.05, prop.size.y, o.z + 0.05))
+	draw_line(base, tip, Color("8a6a4f"), 4.5)
+	draw_line(base, tip, Color(0, 0, 0, 0.22), 1.4)
+	# Hoop continuing the lean off the pole tip, meshed in pale cream.
+	var dir := (tip - base).normalized()
+	var hoop_c := tip + dir * 16.0
+	var mesh: Color = Palette.HEARTH_CREAM * Color(1, 1, 1, 0.22)
+	var rim: Color = Palette.HEARTH_CREAM * Color(1, 1, 1, 0.8)
+	var ring := _ellipse(hoop_c, 15.0, 21.0)
+	draw_colored_polygon(ring, mesh)
+	ring.append(ring[0])
+	draw_polyline(ring, rim, 2.5, true)
+	for i in 3:
+		var t := (float(i) + 1.0) / 4.0
+		draw_line(hoop_c + Vector2(-13 + 26 * t, -19), hoop_c + Vector2(-11 + 22 * t, 19),
+			mesh * Color(1, 1, 1, 1.6), 1.1)
+
+
+## Warm fairy lights strung along a wall face (reference: over the window wall).
+func _decal_string_lights() -> void:
+	var o := prop.origin
+	var s := prop.size
+	var anchors := 5
+	var pts: Array[Vector2] = []
+	for i in anchors:
+		var t := float(i) / float(anchors - 1)
+		pts.append(Iso.to_screen(Vector3(o.x + s.x, o.y + s.y - 0.06, o.z + s.z * t)))
+	for i in anchors - 1:
+		# Sagging wire between anchors, three bulbs per span.
+		var a := pts[i]
+		var b := pts[i + 1]
+		var mid := a.lerp(b, 0.5) + Vector2(0, 7)
+		draw_line(a, mid, Color(0, 0, 0, 0.35), 1.2)
+		draw_line(mid, b, Color(0, 0, 0, 0.35), 1.2)
+		for j in 3:
+			var t2 := (float(j) + 1.0) / 4.0
+			var p := a.lerp(mid, t2 * 2.0) if t2 < 0.5 else mid.lerp(b, t2 * 2.0 - 1.0)
+			draw_circle(p + Vector2(0, 3), 2.6, Palette.WARM_AMBER)
+			draw_circle(p + Vector2(0, 3), 4.6, Palette.WARM_AMBER * Color(1, 1, 1, 0.25))
+
+
+## Two small picture frames on the wall face.
+func _decal_frames() -> void:
+	var o := prop.origin
+	for i in 2:
+		var z := o.z + 0.12 + i * 0.5
+		var quad := PackedVector2Array([
+			Iso.to_screen(Vector3(o.x + prop.size.x, o.y + 0.42, z)),
+			Iso.to_screen(Vector3(o.x + prop.size.x, o.y + 0.42, z + 0.34)),
+			Iso.to_screen(Vector3(o.x + prop.size.x, o.y, z + 0.34)),
+			Iso.to_screen(Vector3(o.x + prop.size.x, o.y, z)),
+		])
+		draw_colored_polygon(quad, Color("5b3a28"))
+		var inner := PackedVector2Array([
+			quad[0].lerp(quad[2], 0.22), quad[1].lerp(quad[3], 0.22),
+			quad[2].lerp(quad[0], 0.22), quad[3].lerp(quad[1], 0.22),
+		])
+		draw_colored_polygon(inner, Palette.HEARTH_CREAM.darkened(0.25))
+
+
+## A little toy mouse: grey body, thread tail — next to the sleeping cat.
+func _decal_mouse_toy() -> void:
+	var c := prop.centre()
+	var at := Iso.to_screen(Vector3(c.x, 0.06, c.z))
+	draw_colored_polygon(_ellipse(at, 9.0, 6.0), Color("8e8698"))
+	draw_colored_polygon(PackedVector2Array([
+		at + Vector2(-9, -2), at + Vector2(-13, -7), at + Vector2(-7, -5)]), Color("8e8698"))
+	var tail := PackedVector2Array([at + Vector2(9, 0), at + Vector2(17, 4),
+		at + Vector2(24, 0), at + Vector2(30, 5)])
+	draw_polyline(tail, Palette.WARNING_CORAL * Color(1, 1, 1, 0.8), 1.6)
