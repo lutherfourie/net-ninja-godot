@@ -1,24 +1,26 @@
 extends Node2D
-## The catch playfield: physics, presentation and input for one contract.
+## The catch playfield: net-lab net play on Godot physics.
 ##
-## Runs in design space (720 x 1280) with no camera, so every number here is the
-## number in Playfield. The model is handed in from the scene and told what
-## happened; it is never read for anything the physics already knows.
+## Runs in design space (720 x 1280) with no camera. CatchModel still owns the
+## cadence, drop limit and cleanse bar; what changed in the net-lab port is HOW
+## catches and dumps happen — balls physically enter the net's bag, and banking
+## means physically landing in the can (a pour, or a lucky deflection). The
+## model is told what happened; it never simulates anything the physics already
+## knows.
 
 const SpectralBall := preload("res://src/view/catch_2d/spectral_ball.gd")
-const NetBody := preload("res://src/view/catch_2d/net_body.gd")
-const NetFront := preload("res://src/view/catch_2d/net_front.gd")
+const NetRig := preload("res://src/view/catch_2d/net_rig.gd")
 const CursedCat := preload("res://src/view/catch_2d/cursed_cat.gd")
 const HauntedBin := preload("res://src/view/catch_2d/haunted_bin.gd")
 const CatchBackdrop := preload("res://src/view/catch_2d/catch_backdrop.gd")
 
 ## Hard ceiling on live bodies. A stuck run should get harder, not slower.
 const MAX_BALLS := 46
+const KEY_NET_SPEED := 1050.0
 
 var model: CatchModel
 
-# These four are untyped on purpose: each is a script-defined node whose API
-# (telegraph, held, celebrate, set_flashes) is not on Node2D.
+# Script-defined nodes whose APIs are not on Node2D — untyped on purpose.
 var _cat
 var _net
 var _bin
@@ -42,35 +44,49 @@ func setup(catch_model: CatchModel) -> void:
 	_build_bounds()
 
 	_bin = HauntedBin.new()
-	_bin.z_index = 2
+	_bin.banked.connect(_on_banked)
 	add_child(_bin)
 
 	_balls = Node2D.new()
 	add_child(_balls)
 
-	_net = NetBody.new()
+	_net = NetRig.new()
+	_net.target = Vector2(Playfield.WIDTH * 0.42, Playfield.RAIL_Y)
+	_net.position = _net.target
+	_net.release_container = _balls
 	add_child(_net)
-	var front := NetFront.new()
-	front.net = _net
-	_net.add_child(front)
 
 	model.slam_telegraphed.connect(_on_telegraph)
 	model.slam_landed.connect(_on_slam)
 	set_process_unhandled_input(true)
 
 
+func net_rig() -> Node2D:
+	return _net
+
+
 # -- Scenery colliders ----------------------------------------------------------
 
 func _build_bounds() -> void:
-	var solid := StaticBody2D.new()
-	solid.collision_layer = Playfield.LAYER_SOLID
-	solid.collision_mask = 0
-	add_child(solid)
-	_wall(solid, Vector2(-Playfield.WALL_T * 0.5, Playfield.HEIGHT * 0.5),
+	# Side walls bounce items back into play — net-lab world.wallRestitution.
+	var walls := StaticBody2D.new()
+	walls.collision_layer = Playfield.LAYER_SOLID
+	walls.collision_mask = 0
+	var wall_mat := PhysicsMaterial.new()
+	wall_mat.bounce = NetLabRules.WALL_RESTITUTION
+	wall_mat.friction = 0.1
+	walls.physics_material_override = wall_mat
+	add_child(walls)
+	_wall(walls, Vector2(-Playfield.WALL_T * 0.5, Playfield.HEIGHT * 0.5),
 		Vector2(Playfield.WALL_T, Playfield.HEIGHT * 2.0))
-	_wall(solid, Vector2(Playfield.WIDTH + Playfield.WALL_T * 0.5, Playfield.HEIGHT * 0.5),
+	_wall(walls, Vector2(Playfield.WIDTH + Playfield.WALL_T * 0.5, Playfield.HEIGHT * 0.5),
 		Vector2(Playfield.WALL_T, Playfield.HEIGHT * 2.0))
-	_wall(solid, Vector2(Playfield.WIDTH * 0.5, Playfield.FLOOR_Y + 30.0),
+
+	var floor_body := StaticBody2D.new()
+	floor_body.collision_layer = Playfield.LAYER_SOLID
+	floor_body.collision_mask = 0
+	add_child(floor_body)
+	_wall(floor_body, Vector2(Playfield.WIDTH * 0.5, Playfield.FLOOR_Y + 30.0),
 		Vector2(Playfield.WIDTH + 80.0, 60.0))
 
 	# Anything touching the floor is a drop. This is the only failure state.
@@ -128,23 +144,47 @@ func _on_floor_hit(body: Node) -> void:
 	model.register_drop()
 
 
+func _on_banked(body: Node) -> void:
+	if not is_instance_valid(body) or not body.is_inside_tree():
+		return
+	body.queue_free()
+	var gained := model.register_dump(1)
+	_bin.celebrate(gained)
+
+
 # -- Frame ----------------------------------------------------------------------
+
+func _physics_process(delta: float) -> void:
+	# Magnet assist: falling balls near an un-full mouth get a gentle pull
+	# toward its centre, strongest up close, zero at the radius edge. Pure
+	# config maths, applied at the physics rate (netCatcher.applyMagnet).
+	if not NetLabRules.MAGNET_ENABLED or _net == null or _net.is_full():
+		return
+	var r := NetLabRules.magnet_radius_px()
+	var mouth: Vector2 = _net.position
+	for ball in _balls.get_children():
+		if not is_instance_valid(ball):
+			continue
+		if ball.linear_velocity.y < -60.0:
+			continue  # rising off a bounce — let the juggle live
+		var d := mouth.distance_to(ball.position)
+		if d >= r or d < 1.0:
+			continue
+		var pull := NetLabRules.magnet_strength_px() * (1.0 - d / r)
+		ball.linear_velocity += (mouth - ball.position) / d * pull * delta
+
 
 func _process(delta: float) -> void:
 	if model == null:
 		return
 	model.tick(delta)
 
-	# Keyboard and gamepad share the rail with the drag.
-	var axis := Input.get_axis("move_left", "move_right")
-	if absf(axis) > 0.05:
-		_net.target_x = clampf(_net.target_x + axis * 900.0 * delta,
-			Playfield.NET_MIN_X, Playfield.NET_MAX_X)
+	# Keyboard and gamepad steer the same target the pointer drags.
+	var axis := Input.get_vector("move_left", "move_right", "move_up", "move_down")
+	if axis.length_squared() > 0.003:
+		_net.target = Playfield.clamp_net(_net.target + axis * KEY_NET_SPEED * delta)
 
-	model.report_net_load(_net.load_count())
-
-	if _net.position.x >= Playfield.DUMP_X:
-		_dump()
+	model.report_net_load(_net.held_count())
 
 	_cull()
 
@@ -153,22 +193,10 @@ func _process(delta: float) -> void:
 	_backdrop.set_flashes(_slam_flash, _drop_flash)
 
 
-func _dump() -> void:
-	var held: Array = _net.held()
-	if held.is_empty():
-		return
-	var gained := model.register_dump(held.size())
-	if gained <= 0.0 and model.running:
-		return
-	for body in held:
-		if is_instance_valid(body):
-			body.queue_free()
-	_bin.celebrate(gained)
-
-
 func _cull() -> void:
 	for child in _balls.get_children():
-		if child.position.y > Playfield.HEIGHT + 160.0:
+		if child.position.y > Playfield.HEIGHT + 160.0 \
+				or absf(child.position.x - Playfield.WIDTH * 0.5) > Playfield.WIDTH:
 			child.queue_free()
 
 
@@ -176,17 +204,21 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventScreenTouch:
 		_dragging = event.pressed
 		if event.pressed:
-			_grab(event.position)
+			_grab(event.position, true)
 	elif event is InputEventScreenDrag:
-		_grab(event.position)
+		_grab(event.position, true)
 	elif event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
 		_dragging = event.pressed
 		if event.pressed:
-			_grab(event.position)
+			_grab(event.position, false)
 	elif event is InputEventMouseMotion and _dragging:
-		_grab(event.position)
+		_grab(event.position, false)
 
 
-func _grab(screen_position: Vector2) -> void:
-	_net.target_x = clampf(make_canvas_position_local(screen_position).x,
-		Playfield.NET_MIN_X, Playfield.NET_MAX_X)
+func _grab(screen_position: Vector2, is_touch: bool) -> void:
+	var local := make_canvas_position_local(screen_position)
+	if is_touch:
+		# net-lab input.touchOffsetY: the net rides above the fingertip so the
+		# hand never occludes the catch.
+		local.y -= NetLabRules.touch_offset_px()
+	_net.target = Playfield.clamp_net(local)

@@ -23,6 +23,7 @@ var _pop := 0.0
 func configure(rules: CatchRules) -> void:
 	radius = rules.ball_radius
 	gravity_scale = rules.ball_gravity_scale
+	mass = 0.35  # light against the net's 14 — the net always wins the shove
 	linear_damp = 0.22
 	angular_damp = 1.6
 	contact_monitor = false

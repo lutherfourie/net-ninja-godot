@@ -24,7 +24,10 @@ var _finished := false
 
 
 func _ready() -> void:
-	model = CatchModel.new(CatchRules.first_contract())
+	# The smoke harness pins a seed on the root for deterministic gate runs
+	# (net-lab's conformance habit); normal play stays randomized.
+	var seed_v := int(get_tree().root.get_meta("nn_rng_seed", 0))
+	model = CatchModel.new(CatchRules.first_contract(), seed_v)
 
 	_view = Catch2DView.new()
 	add_child(_view)

@@ -18,7 +18,7 @@ directly against `docs/NetNinja_Visual_Foundation_v0.2.pdf`. Portrait mobile,
 | --- | --- |
 | **Main menu** | Live room behind the UI, zone layout straight from the visual foundation (logo 16–32%, Ami focal 32–78%, CTA 80–92%), one primary action, settings kept small and inside the safe area. |
 | **Room hub** | Ami's flat as a walkable 2:1 isometric space: floorboards, wall dressing, the haunted desk PC, cat tree, Miso asleep on the rug, three drifting wisps, warm amber lamp pools against violet monitor bloom. |
-| **Catch loop** | Take a contract at the PC and the fight starts: the cursed cat slams a paw, spectral balls burst out and fall, you drag the net to catch them, and carry a full net to the can at the edge to cleanse it. Drop limit is the only way to lose. |
+| **Catch loop** | net-lab's net play (see docs/NET-LAB-PORT.md), on Godot physics: drag the net freely, catch on the move (balls seat in the bag), rim-juggle near-misses, and POUR — tip the mouth over the open can, the only way to empty. Full net = taut lid, drops are the only way to lose, and the tempo director eases the cadence after mistakes. |
 | **Interaction** | Proximity prompts on the PC, Miso, the bookshelf, the tea and the front door. Clearing a contract lifts the curse on the flat; losing one deepens it, and the room visibly reacts either way. |
 | **Input** | WASD / arrows / gamepad, plus an on-screen thumb stick for touch in the hub and a one-axis drag in the catch loop. `E` or tap to interact, `Esc` to back out. |
 | **Accessibility** | Reduce-motion and high-contrast toggles wired through `GameState`, plus a curse-level slider for eyeballing the possession states. |

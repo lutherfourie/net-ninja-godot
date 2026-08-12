@@ -51,8 +51,20 @@ semantic light presets, snapshot undo, and Ctrl+S straight into
 `data/rooms/ami_apartment.json`. The hub and menu load that JSON through
 `RoomIO` with the old code builder as fallback. See docs/EDITOR.md.
 
+## Shipped — v0.4.0: net-lab net play, natively
+
+The catch net is now net-lab's net (lutherfourie/net-lab), integrated on Godot
+physics: free 2D pointer-follow with fill-weighted lag, stroke-tracked facing
+with weighted self-righting and clamp-up, capture-on-entry holding, the lid at
+capacity (full bounce), pour as the only emptying verb — physically, into an
+open can — plus the tempo director and magnet assist. Tested by a seeded
+persona bot in-engine (tools/net_smoke.tscn, exit-code gated). The full
+constant-for-constant ledger, the physics adaptations, and what was left for
+later slices: docs/NET-LAB-PORT.md.
+
 ## Next
 
+**(superseded by v0.4.0)** The original queued note, kept for history:
 **Net play rework (queued, per Luther):** rebuild the catch net in the
 "net-ninja" style out of Godot-native physics — a short joint chain of
 RigidBody2D segments (PinJoint2D / DampedSpringJoint2D) so the bag genuinely

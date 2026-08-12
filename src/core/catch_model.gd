@@ -25,6 +25,20 @@ var drops := 0
 var net_load := 0
 var running := false
 
+## net-lab tempoDirector.ts (M1 flow-channel DDA): "cat agitation" reads clean
+## play and compresses the gap between slams; a drop eases it. Neutral flow maps
+## to x1.0, so this is pacing SHAPE, not a global speed change — and the ease
+## side is the structural anti-death-spiral.
+var intensity := 0.35                 # tempo.baseline is also the start value
+const TEMPO_BASELINE := 0.35
+const TEMPO_COMPRESS_THR := 0.6       # tempo.compressThreshold — deadband above baseline
+const TEMPO_RISE_CATCH := 0.05        # tempo.risePerCatch
+const TEMPO_RISE_DUMP := 0.04         # tempo.risePerDump (per banked ball)
+const TEMPO_DROP_MISS := 0.30         # tempo.dropPerMiss
+const TEMPO_REBOUND := 0.06           # tempo.reboundPerSec
+const TEMPO_GAP_MIN := 0.62           # tempo.gapCompressMin
+const TEMPO_GAP_MAX := 1.35           # tempo.gapEaseMax
+
 var _next_slam := 1.1
 var _telegraph_left := -1.0
 var _pending_x := 0.5
@@ -60,18 +74,32 @@ func tick(delta: float) -> void:
 			slam_landed.emit(_burst_size(), _pending_x)
 		return
 
+	# Tempo rebounds toward baseline when nothing happens.
+	intensity = clampf(move_toward(intensity, TEMPO_BASELINE, TEMPO_REBOUND * delta), 0.0, 1.0)
+
 	_next_slam -= delta
 	if _next_slam <= 0.0:
-		# Never slam into the bin lane — the can is protected, not a target.
-		_pending_x = _rng.randf_range(0.12, 0.74)
+		# Never slam into the bin lane — the can is protected, not a target
+		# (0.68 keeps the burst spread clear of the widened net-lab bin).
+		_pending_x = _rng.randf_range(0.12, 0.68)
 		_telegraph_left = rules.slam_telegraph
 		_next_slam = _interval()
 		slam_telegraphed.emit(_pending_x)
 
 
-## Seconds to the next slam, tightening as the bar fills.
+## Seconds to the next slam: cleanse ramp shaped by the tempo director's gap
+## multiplier (compress for mastery, ease after drops).
 func _interval() -> float:
-	return lerpf(rules.slam_interval_start, rules.slam_interval_end, cleansed)
+	return lerpf(rules.slam_interval_start, rules.slam_interval_end, cleansed) * _gap_mult()
+
+
+func _gap_mult() -> float:
+	if intensity >= TEMPO_COMPRESS_THR:
+		return lerpf(1.0, TEMPO_GAP_MIN,
+			(intensity - TEMPO_COMPRESS_THR) / (1.0 - TEMPO_COMPRESS_THR))
+	if intensity < TEMPO_BASELINE:
+		return lerpf(TEMPO_GAP_MAX, 1.0, intensity / TEMPO_BASELINE)
+	return 1.0  # neutral deadband — coping-normally play keeps current pacing
 
 
 func _burst_size() -> int:
@@ -83,6 +111,9 @@ func _burst_size() -> int:
 func report_net_load(count: int) -> void:
 	if count == net_load:
 		return
+	if count > net_load:
+		# A rising load is a clean catch — heat the tempo.
+		intensity = clampf(intensity + TEMPO_RISE_CATCH * (count - net_load), 0.0, 1.0)
 	net_load = count
 	net_load_changed.emit(count)
 
@@ -91,19 +122,22 @@ func register_drop() -> void:
 	if not running:
 		return
 	drops += 1
+	intensity = clampf(intensity - TEMPO_DROP_MISS, 0.0, 1.0)
 	drops_changed.emit(drops, rules.drop_limit)
 	if drops >= rules.drop_limit:
 		_finish(false)
 
 
 ## Returns the bar progress actually gained, so the view can size its burst.
+## Called per banked ball since the net-lab port — the view owns net-load
+## reporting, so no zeroing happens here.
 func register_dump(count: int) -> float:
 	if not running or count <= 0:
 		return 0.0
 	var before := cleansed
 	cleansed = clampf(cleansed + count * rules.cleanse_per_ball, 0.0, 1.0)
+	intensity = clampf(intensity + TEMPO_RISE_DUMP * count, 0.0, 1.0)
 	cleansed_changed.emit(cleansed)
-	report_net_load(0)
 	if cleansed >= 1.0:
 		_finish(true)
 	return cleansed - before
