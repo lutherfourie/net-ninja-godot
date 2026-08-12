@@ -28,3 +28,4 @@ desktop.ini
 # Fonts are fetched, not committed — see assets/fonts/README.md
 /assets/fonts/*.ttf
 /assets/fonts/*.otf
+/assets/fonts/*.import
