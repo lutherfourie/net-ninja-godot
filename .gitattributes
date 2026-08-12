@@ -1,0 +1,17 @@
+# Normalise line endings for text assets
+*.gd        text eol=lf
+*.tscn      text eol=lf
+*.tres      text eol=lf
+*.godot     text eol=lf
+*.md        text eol=lf
+*.json      text eol=lf
+*.ps1       text eol=crlf
+
+# Treat engine binaries / art as binary
+*.ttf       binary
+*.otf       binary
+*.png       binary
+*.webp      binary
+*.ogg       binary
+*.wav       binary
+*.pdf       binary
